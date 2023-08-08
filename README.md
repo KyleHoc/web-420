@@ -1,2 +1,6 @@
-# web-420
-Repository for assigments from Bellevue University's WEB 420 course
+# WEB 420 RESTful APIs
+## Contributors
+<ul>
+  <li>Kyle Hochdoerfer</li>
+  <li>Richard Krasso</li>
+</ul>

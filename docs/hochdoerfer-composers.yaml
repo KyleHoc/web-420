@@ -1,0 +1,84 @@
+#----------------------------------------------------------------------
+# Title: hochdoerfer-composers.yaml
+# Author: Kyle Hochdoerfer
+# Date: 08/23/23
+# Description: YAML file for describing composer API operations
+#----------------------------------------------------------------------
+
+#Set Open API version 3.0.0
+openapi: 3.0.0
+info:
+  #Provide a title and version for the API
+  title: Composer API
+  version: 1.0.0
+paths:
+  #Describe the findAllComposers GET operation and its responses
+  /composers:
+    get:
+      tags:
+        - Composers
+      summary: returns a list of composer documents
+      description: API for returning a list of documents from MongoDB atlas
+      operationId: findAllComposers
+      responses:
+        '200':
+          description: Composer documents
+        '500':
+          description: Server Exception
+        '501':
+          description: MongoDB Exception
+    #Describe the createComposer POST operation
+    post:
+      tags:
+        - Composers
+      summary: Creates a new composer object
+      description: API for adding new composer objects
+      operationId: createComposer
+      #Describe the operation's request body, which contains two strings, firstName and lastName
+      requestBody:
+        description: Composer's information
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - firstName
+                - lastName
+              properties:
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+        required: true
+      #Describe the three responses for createComposer
+      responses:
+        '200':
+          description: Composer added
+        '500':
+          description: Server Exception
+        '501':
+          description: MongoDB Exception
+  #Describe the findComposersById GET operation
+  /composers/{id}:
+    get:
+      tags:
+        - Composers
+      summary: Returns a composer document
+      description: API for returning a single composer object from MongoDB
+      operationId: findComposerById
+      #Describe the id string parameter of the operation
+      parameters:
+        - name: id
+          in: path
+          description: The composerId requested by the user
+          required: true
+          schema:
+            type: string
+      #Describe the responses of the operation
+      responses:
+        '200':
+          description: Composer document in JSON found
+        '500':
+          description: Server Exception
+        '501':
+          description: MongoDB Exception

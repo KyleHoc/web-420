@@ -15,6 +15,19 @@ const http = require('http');
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
 
+//Require the composer API from the routes file
+const composerAPI = require('./routes/hochdoerfer-composer-routes');
+
+//Create a variable for a MongoDB connection string
+const CONN = 'mongodb+srv://web420_user:s3cret@cluster0.tydee4p.mongodb.net/web420DB';
+
+//Connect to MongoDB and output a message stating success for failure to do so
+mongoose.connect(CONN).then(() => {
+    console.log('Connection to MongoDB database was successful\n  If you see this message it means you were able to connect to your MongoDB Atlas cluster');
+}).catch(err => {
+    console.log('MongoDB Error: ' + err.message);
+})
+
 //Create an app variable set to the express library
 const app = express();
 
@@ -25,6 +38,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+
 //Create an options object containing a title and version number
 const options = {
     definition: {
@@ -34,6 +48,7 @@ const options = {
             version: "1.0.0",
         },
     },
+    //Set the object APIs to be in the routes folder
     apis: ['./routes/*.js'],
 };
 
@@ -42,6 +57,9 @@ const openapiSpecification = swaggerJsdoc(options);
 
 //Wire the openapispecification variable to the app variable
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openapiSpecification));
+
+//Use the composer API
+app.use('/api', composerAPI)
 
 //Create a server using the PORT
 app.listen(PORT, () => {

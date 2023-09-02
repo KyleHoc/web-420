@@ -13,7 +13,7 @@ info:
   version: 1.0.0
 paths:
   #Describe the findAllComposers GET operation and its responses
-  /composers:
+  /api/composers:
     get:
       tags:
         - Composers

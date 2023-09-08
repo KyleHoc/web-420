@@ -15,8 +15,9 @@ const http = require('http');
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
 
-//Require the composer API from the routes file
+//Require the composer and person API from the routes file
 const composerAPI = require('./routes/hochdoerfer-composer-routes');
+const personAPI = require('./routes/hochdoerfer-person-routes')
 
 //Create a variable for a MongoDB connection string
 const CONN = 'mongodb+srv://web420_user:s3cret@cluster0.tydee4p.mongodb.net/web420DB';
@@ -58,8 +59,9 @@ const openapiSpecification = swaggerJsdoc(options);
 //Wire the openapispecification variable to the app variable
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openapiSpecification));
 
-//Use the composer API
-app.use('/api', composerAPI)
+//Use the composer and person APIs
+app.use('/api', composerAPI);
+app.use('/api', personAPI);
 
 //Create a server using the PORT
 app.listen(PORT, () => {
